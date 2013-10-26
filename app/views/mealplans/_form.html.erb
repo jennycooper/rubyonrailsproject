@@ -1,26 +1,19 @@
-<%= form_for(@mealplan) do |f| %>
-  <% if @mealplan.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@mealplan.errors.count, "error") %> prohibited this mealplan from being saved:</h2>
-
-      <ul>
-      <% @mealplan.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for @mealplan, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :start, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.date_select :start, :class => 'date_select' %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :start %><br />
-    <%= f.date_select :start %>
   </div>
-  <div class="field">
-    <%= f.label :end %><br />
-    <%= f.date_select :end %>
+  <div class="control-group">
+    <%= f.label :end, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.date_select :end, :class => 'date_select' %>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                mealplans_path, :class => 'btn' %>
   </div>
 <% end %>

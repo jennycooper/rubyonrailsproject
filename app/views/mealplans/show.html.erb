@@ -1,21 +1,25 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Mealplan -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <b>Welcome. This is the meal plan for:</b>
-  <%= @mealplan.user.email %>
-</p> 
-<p>
-  <b>Start:</b>
-  <%= @mealplan.start %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:start) %>:</strong></dt>
+  <dd><%= @mealplan.start %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:end) %>:</strong></dt>
+  <dd><%= @mealplan.end %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
+  <dd><%= @mealplan.user_id %></dd>
+</dl>
 
-<p>
-  <b>End:</b>
-  <%= @mealplan.end %>
-</p>
-
-
-
-
-<%= link_to 'Edit', edit_mealplan_path(@mealplan) %> |
-<%= link_to 'Back', mealplans_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              mealplans_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_mealplan_path(@mealplan), :class => 'btn btn-success' %>
+  <%#= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              mealplan_path(@mealplan),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>

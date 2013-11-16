@@ -11,7 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131026215847) do
+ActiveRecord::Schema.define(:version => 20131116111223) do
+
+  create_table "diaries", :force => true do |t|
+    t.string   "title"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "diaries", ["user_id"], :name => "index_diaries_on_user_id"
+
+  create_table "entries", :force => true do |t|
+    t.date     "day"
+    t.text     "comment"
+    t.integer  "diary_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "entries", ["diary_id"], :name => "index_entries_on_diary_id"
 
   create_table "mealplans", :force => true do |t|
     t.date     "start"
@@ -19,9 +38,22 @@ ActiveRecord::Schema.define(:version => 20131026215847) do
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "title"
   end
 
   add_index "mealplans", ["user_id"], :name => "index_mealplans_on_user_id"
+
+  create_table "meals", :force => true do |t|
+    t.date     "day"
+    t.integer  "mealplan_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "breakfast"
+    t.string   "lunch"
+    t.string   "dinner"
+  end
+
+  add_index "meals", ["mealplan_id"], :name => "index_meals_on_mealplan_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false

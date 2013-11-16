@@ -1,0 +1,24 @@
+<h1>Listing diaries</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @diaries.each do |diary| %>
+<% unless diary.user.admin %>
+  <tr>
+    <td><%= diary.user.email %></td>
+    <td><%= link_to 'Show', diary %></td>
+    <td><%#= link_to 'Edit', edit_diary_path(diary) %></td>
+    <td><%#= link_to 'Destroy', diary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+<% end %>
+</table>
+
+<br />
+

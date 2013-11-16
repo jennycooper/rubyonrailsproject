@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+<h2>Food diary for: <%= @diary.user.email %></h2>
+
+
+<% if current_user.try(:admin?) %>
+<div class="form-actions">
+  <%= link_to 'Edit Title', edit_diary_path(@diary), :class => 'btn btn-success'  %>
+  <%= link_to 'Return to list of diaries', diaries_path, :class => 'btn btn-success'  %>
+</div>
+<% end %>
+
+<% if @diary.entries.length!=0 %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%#= model_class.human_attribute_name(:id) %></th>
+      <th><%#= model_class.human_attribute_name(:day) %></th>
+      <th><%#= model_class.human_attribute_name(:comment) %></th>
+      <th><%#= model_class.human_attribute_name(:diary_id) %></th>
+      <th><%#=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @diary.entries.each do |entry| %>
+      <tr >
+        <td><%#= link_to meal.id, mealplan_meal_path(mealplan, meal) %></td>
+        <td style="background-color: lightgrey"><%= entry.day %></td>
+        <td style="background-color: lightgrey"><textarea style="width: 500px; height: 100px;"><%= entry.comment %></textarea></td>
+        <td><%#= entry.diary_id %></td>
+        <td><%#=l meal.created_at %></td>
+        <td style="float:right; background-color: white">
+          <%= link_to 'edit comment', edit_diary_entry_path(@diary, entry), :class => 'btn btn-primary'  %>
+          <%= link_to 'delete comment', diary_entry_path(@diary, entry), :method => :delete, :class => 'btn btn-primary' %>
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <h2>Your diary has not been set up yet, please try again soon.</h2>
+<% end %>
+
+
+
+<%= link_to 'Add New Comment', new_diary_entry_path(@diary), :class => 'btn btn-primary'  %>
+
+
+<%#= link_to 'Edit', edit_diary_path(@diary) %> |
+<%#= link_to 'Back', mealplan_path(:id) %>

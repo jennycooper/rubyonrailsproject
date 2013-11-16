@@ -1,4 +1,5 @@
 class MealplansController < ApplicationController
+  require 'Calendar'
   # GET /mealplans
   # GET /mealplans.json
   def index
@@ -13,24 +14,16 @@ class MealplansController < ApplicationController
   # GET /mealplans/1
   # GET /mealplans/1.json
   def show
-      # @mealplan = current_user.mealplan
-    
-
     if current_user && current_user.admin
-       @mealplan = Mealplan.find(params[:id]) #.find(params[:id])
-     
+      @mealplan = Mealplan.find(params[:id]) #.find(params[:id])
+      @mymeals = @mealplan.meals.order(:day)
     elsif  current_user.id == params[:id].to_i
       @mealplan = Mealplan.find(params[:id])
+      @mymeals = @mealplan.meals.order(:day)
     else
       redirect_to mealplan_path(current_user.id), alert: "You can't do that!!!"
       return
     end
-
-
-    # if current_user.admin
-    # else
-    #   @mealplan = current_user.mealplan
-    # end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -94,8 +87,24 @@ class MealplansController < ApplicationController
   # DELETE /mealplans/1
   # DELETE /mealplans/1.json
   def destroy
+    @user = User.find(params[:user_id])
     @mealplan = Mealplan.find(params[:id])
+    #@mealplan.destroy
+    user.destroy
+
+    respond_to do |format|
+      format.html { redirect_to mealplans_url }
+      format.json { head :no_content }
+    end
+  end
+
+  def delete_user
+    @user = User.find(params[:id])
+    @mealplan = Mealplan.find_by_user_id(params[:id])
+    @diary = Diary.find_by_user_id(params[:id])
     @mealplan.destroy
+    @user.destroy
+    @diary.destroy
 
     respond_to do |format|
       format.html { redirect_to mealplans_url }

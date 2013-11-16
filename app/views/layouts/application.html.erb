@@ -37,8 +37,9 @@
     <%= javascript_include_tag "application" %>
   </head>
   <body>
-
+    <div class="mycontainer">
     <div class="navbar navbar-fluid-top">
+      <img src="/logo.jpg" alt="Site Header"  /><br />
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
@@ -46,43 +47,89 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">GoodLivingNutrition</a>
           <div class="container-fluid nav-collapse">
-            <ul class="nav">
+            <!--<img src="/assets/banner1.jpg" alt="Site Header"  /><br />-->
+            <ul class="mynav">
+              <br/>
+              <% if current_user  %>
+                <% if !current_user.admin %>
+                  <li><%= link_to "View Diet Program", mealplan_path(current_user.id)  %></li>
+                <% end %>
+              <% end %>
+              <% if current_user  %>
+                <% if current_user.admin%>
+                  <li><%= link_to "List All Programs", mealplans_path  %></li>
+                <% end %>
+              <% end %>
+              <% if current_user  %>
+                <% if !current_user.admin %>
+                  <li><%= link_to "View Diary", diary_path(current_user.id)  %></li>
+                <% end %>
+              <% end %>
+              <% if current_user  %>
+                <% if current_user.admin%>
+                  <li><%= link_to "List All Diaries", diaries_path  %></li>
+                <% end %>
+              <% end %>
               <% if current_user%>
                 <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete  %></li>
               <% else %>
                 <li><%= link_to "Sign in", new_user_session_path  %></li>
               <% end %>
-
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
+    
 
     <div class="container-fluid">
       <div class="row-fluid">
+        
         <div class="span3">
           <div class="well sidebar-nav">
+            <div class="myimages">
+              <img src="/assets/nav-banner.jpg" alt="Images of fruit" />
+              <!--
+              <img src="/assets/fruit2.jpg" alt="Site Header" />
+
+              <img src="/assets/fruit1.jpg" alt="Site Header" />
+             
+              <img src="/assets/image1.jpg" alt="Site Header" />
+              -->
+            </div>
+            <!--
             <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
               <% if current_user  %>
                 <% if !current_user.admin %>
-                  <li><%= link_to "View Mealplan", mealplan_path(current_user.id)  %></li>
+                  <li><%= link_to "View Diet Program", mealplan_path(current_user.id)  %></li>
                 <% end %>
               <% end %>
               <% if current_user  %>
                 <% if current_user.admin%>
-                  <li><%= link_to "Admin link to all mealplans", mealplans_path  %></li>
+                  <li><%= link_to "List All Programs", mealplans_path  %></li>
                 <% end %>
               <% end %>
-              <li><%= link_to "Link3", "/path3"  %></li>
+              <% if current_user  %>
+                <% if !current_user.admin %>
+                  <li><%= link_to "View Diary", diary_path(current_user.id)  %></li>
+                <% end %>
+              <% end %>
+              <% if current_user  %>
+                <% if current_user.admin%>
+                  <li><%= link_to "List All Diaries", diaries_path  %></li>
+                <% end %>
+              <% end %>
+              <% if current_user%>
+                <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete  %></li>
+              <% else %>
+                <li><%= link_to "Sign in", new_user_session_path  %></li>
+              <% end %>
             </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
+          -->
+          </div>
+        </div>
+        
         <div class="span9">
           <%= bootstrap_flash %>
           <%= yield %>
@@ -94,6 +141,6 @@
       </footer>
 
     </div> <!-- /container -->
-
+    </div>
   </body>
 </html>

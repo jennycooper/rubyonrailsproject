@@ -1,2 +1,23 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<% if !current_user  %>
+	<h2>Welcome to Good Living Nutrition's personal diet program pages.</h2>
+	<div class="maintext">
+		<p>Good Living Nutrition can give you a personalised diet program, for for food disorders ranging from diabetes to gluten-free. Each program is individually set up to cater for your own special requirements.</p>
+		</br>
+		<p>You must be registered with Good Living Nutrition in order to proceed further with this site.</p>
+		<p>Please contact info@goodlivingnutrition.ie for details on how to receive your own personalized diet program.</p>	
+	</div>
+<% end %>
+
+<% if current_user  %>
+	<% if current_user.admin  %>
+		<h2>Welcome Admin!.</h2>
+		<div class="maintext">
+			<p>Please use the above links if you would like to view and edit diet programs and diaries.</p>
+		</div>
+	<% else %>
+		<h2>Welcome <%= current_user.email %></h2>
+		<div class="maintext">
+			<p>Please use the above links if you would like to view your diet program or your food diary.</p>
+		</div>
+	<% end %>
+<% end %>

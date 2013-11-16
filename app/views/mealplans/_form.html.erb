@@ -1,4 +1,5 @@
 <%= form_for @mealplan, :html => { :class => 'form-horizontal' } do |f| %>
+  
   <div class="control-group">
     <%= f.label :start, :class => 'control-label' %>
     <div class="controls">
@@ -11,9 +12,16 @@
       <%= f.date_select :end, :class => 'date_select' %>
     </div>
   </div>
+  <div class="control-group">
+    <%= f.label :title, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :title, :class => 'text_field' %>
+    </div>
+  </div>
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 mealplans_path, :class => 'btn' %>
   </div>
+
 <% end %>

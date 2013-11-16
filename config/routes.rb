@@ -1,10 +1,25 @@
 GoodLivingNutrition::Application.routes.draw do
-  resources :mealplans, except: [:destroy, :new, :create]
 
+
+  
+
+
+  resources :entries
+
+
+  resources :diaries, except: [:destroy, :new, :create] do
+    resources :entries
+  end
+
+
+  resources :mealplans, except: [:destroy, :new, :create] do
+    resources :meals
+  end
 
   devise_for :users
 
   get "welcome/index"
+  match '/users/:id' => 'mealplans#delete_user'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -11,3 +11,97 @@
  *= require_self
  *= require_tree .
  */
+
+.mynav {
+	float: right;
+	color: black;
+	font-size: 24px;
+	list-style-type: none;
+	margin-right: 10px;
+}
+
+.mynav li {
+	display: inline;
+}
+
+.mynav li {
+	padding-left: 50px;
+	padding-right: 5px;
+}
+
+.mycontainer {
+	width: 100%;
+}
+
+.nav-list {
+	#background-color: white;
+	font-size: 20px;
+}
+
+.maintext p {
+	font-size: 16px;
+}
+
+.navbar-inner {
+	paddint-top: 20px;
+}
+
+.span3 .myimages {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+	width: 50%;
+}
+
+table.mytable {
+	font-family: "Trebuchet MS", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.4em;
+    font-style: normal;
+    border-collapse:separate;
+    margin-bottom: 30px;
+    margin-right: 20px;
+    float: left;
+}
+
+.mytable thead th{
+    padding:5px;
+    color:#fff;
+    #text-shadow:1px 1px 1px #568F23;
+    border:1px solid #93CE37;
+    #border-bottom:3px solid #9ED929;
+    background-color:#9DD929;
+    #background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.02, rgb(123,192,67)),
+        color-stop(0.51, rgb(139,198,66)),
+        color-stop(0.87, rgb(158,217,41))
+        );
+    #background: -moz-linear-gradient(
+        center bottom,
+        rgb(123,192,67) 2%,
+        rgb(139,198,66) 51%,
+        rgb(158,217,41) 87%
+        );
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-radius:5px 5px 0px 0px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+
+.mytable tbody td{
+    padding:10px;
+    text-align:center;
+    background-color:#DEF3CA;
+    border: 2px solid #E7EFE0;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    color:#666;
+    text-shadow:1px 1px 1px #fff;
+}

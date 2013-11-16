@@ -1,25 +1,74 @@
 <%- model_class = Mealplan -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+  <h2>Diet Program for: <%= @mealplan.user.email %></h2>
 </div>
-
+<%#= @mealplan.inspect %>
+<%#= debug @mymeals %>
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:start) %>:</strong></dt>
+    <dt><strong><%= model_class.human_attribute_name(:start) %>:</strong></dt>
   <dd><%= @mealplan.start %></dd>
   <dt><strong><%= model_class.human_attribute_name(:end) %>:</strong></dt>
   <dd><%= @mealplan.end %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
-  <dd><%= @mealplan.user_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
+  <dd><%= @mealplan.title %></dd>
 </dl>
 
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              mealplans_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_mealplan_path(@mealplan), :class => 'btn btn-success' %>
-  <%#= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              mealplan_path(@mealplan),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+<!-- data is displayed in a different format for admin and noraml users -->
+<% if current_user.try(:admin?) %>
+<!-- only admin can edit dates for a diet progam -->
+  <div class="form-actions">
+    <%= link_to 'Edit Dates', edit_mealplan_path(@mealplan), :class => 'btn btn-success' %>
+    <%= link_to 'Return to list of meal plans', mealplans_path, :class => 'btn btn-success'  %>
+  </div>
+<% end %>
+
+  <!-- if no meals exist yet in the diet program, they can't be displayed -->
+  <% if @mealplan.meals.length!=0 %>
+
+      <!-- loop through all the meals in the diet program -->
+      <div class="mycalendar">
+        <% @mymeals.each do |meal| %>
+        <table class="mytable">
+
+          <!-- header is the date -->
+            <thead>
+              <tr><th colspan="2"><%= meal.day %></th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Breakfast: </td><td><a href="/recipes/<%= meal.breakfast %>" target="_blank"><%= meal.breakfast %></a></td></tr>
+              <tr><td>Lunch: </td><td><a href="/recipes/<%= meal.lunch %>" target="_blank"><%= meal.lunch %></a></td></tr>
+              <tr><td>Dinner: </td><td><a href="/recipes/<%= meal.dinner %>" target="_blank"><%= meal.dinner %></a></td></tr>
+              <!-- only allow the admin to edit or delete a meal -->
+              <% if current_user.try(:admin?) %>
+                <tr>
+                  <td><%= link_to 'edit meal', edit_mealplan_meal_path(@mealplan, meal), :class => 'btn btn-primary'  %></td>
+                  <td><%= link_to 'Delete', mealplan_meal_path(@mealplan, meal), method: :delete, :class => 'btn btn-danger'  %></td>
+                </tr>
+              <% end %>
+            </tbody>
+        </table>
+          <% end %>
+      </div>
+  <%# end %>
+
+  <!-- else no diet program has been set up for this user yet -->
+  <% else %>
+      <!-- show different message for regular user and admin -->
+      <% if current_user.try(:admin?) %>
+        <h3> No meals have been added yet to this diet program</h3>
+      <% else %>
+        <h3>Your diet program has not been set up yet, please try again soon.</h3>
+      <% end %>
+  <% end %>
+
+<!-- only allow the admin to add or edit a meal -->
+<% if current_user.try(:admin?) %>
+  <div class="form-actions" style="clear:both;">
+    <%= link_to 'add meal', new_mealplan_meal_path(@mealplan), :class => 'btn btn-primary'  %>
+    <%= link_to t('.back', :default => t("helpers.links.back")),
+                mealplans_path, :class => 'btn'  %>
+  </div>
+<% end %>
+
 </div>
+
